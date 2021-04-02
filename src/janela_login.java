@@ -85,7 +85,11 @@ public class janela_login extends JFrame {
     }
 
     private void jButton_loginActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        janela_principal frame = new janela_principal();
+        frame.setVisible(true);
+        String resp = Talker.getInstance().login("Valmor");
+        System.out.println("NO BOTAO: " + resp);
+        dispose();
     }
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {

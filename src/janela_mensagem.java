@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 
 public class janela_mensagem extends JFrame {
 
@@ -58,6 +59,11 @@ public class janela_mensagem extends JFrame {
         });
 
         jButton_Excluir.setText("Excluir");
+        jButton_Excluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ExcluirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,6 +120,11 @@ public class janela_mensagem extends JFrame {
         pack();
 
     }
+
+    private void jButton_ExcluirActionPerformed(ActionEvent evt) {
+        this.dispose();
+    }
+
     private void Destinatario_jfmensagemActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
@@ -123,6 +134,7 @@ public class janela_mensagem extends JFrame {
     }
 
     private void jButton_EnviarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+
     }
+
 }
