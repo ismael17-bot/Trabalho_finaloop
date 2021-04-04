@@ -1,24 +1,21 @@
 import javax.swing.*;
 
-public class janela_login extends JFrame {
+public class Janela_login extends JFrame {
 
-    private javax.swing.JTextPane Username;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton_login;
-    private javax.swing.JEditorPane jEditorPane1;
-    private javax.swing.JLabel jLabel1_login;
-    private javax.swing.JLabel jLabel_fundo_login;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private JTextPane Username;
+    private JButton jButton1;
+    private JButton jButton_login;
+    private JEditorPane jEditorPane1;
+    private JLabel jLabel1_login;
+    private JScrollPane jScrollPane1;
+    private JScrollPane jScrollPane2;
+    private JTextField jTextField2;
 
-    public  janela_login(){
+    public Janela_login(){
 
         JTextField jTextField1 = new JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
-
         jScrollPane1 = new javax.swing.JScrollPane();
         Username = new javax.swing.JTextPane();
         jButton1 = new javax.swing.JButton();
@@ -34,11 +31,7 @@ public class janela_login extends JFrame {
         });
 
         jScrollPane2.setViewportView(jEditorPane1);
-
-
-
         jScrollPane1.setViewportView(Username);
-
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -85,14 +78,19 @@ public class janela_login extends JFrame {
     }
 
     private void jButton_loginActionPerformed(java.awt.event.ActionEvent evt) {
-        janela_principal frame = new janela_principal();
-        frame.setVisible(true);
-        String resp = Talker.getInstance().login("Valmor");
+
+        //fazer o if validar o login
+
+        String resp = Talker.getInstance().login(jTextField2.getText());
         System.out.println("NO BOTAO: " + resp);
+        Usuario.getInstance().setUser_id(jTextField2.getText());
+        Janela_principal.getInstance().setVisible(true);
         dispose();
+
     }
 
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }
+
 }

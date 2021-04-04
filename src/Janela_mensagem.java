@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
-public class janela_mensagem extends JFrame {
+public class Janela_mensagem extends JFrame {
 
     // Variables declaration - do not modify
     private javax.swing.JTextField Assunto_jfmensagem;
@@ -12,8 +12,15 @@ public class janela_mensagem extends JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextPane jTextPane1;
+    private static Janela_mensagem _this;
 
-    public janela_mensagem(){
+    public static Janela_mensagem getInstance(){
+        if(_this == null)
+            _this= new Janela_mensagem();
+        return _this;
+    }
+
+    public Janela_mensagem(){
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         Assunto_jfmensagem = new javax.swing.JTextField();
@@ -23,7 +30,7 @@ public class janela_mensagem extends JFrame {
         jButton_Enviar = new javax.swing.JButton();
         jButton_Excluir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("Janela_mensagem"); // NOI18N
@@ -121,6 +128,10 @@ public class janela_mensagem extends JFrame {
 
     }
 
+    private void addActionEnviar(){
+
+    }
+
     private void jButton_ExcluirActionPerformed(ActionEvent evt) {
         this.dispose();
     }
@@ -130,11 +141,16 @@ public class janela_mensagem extends JFrame {
     }
 
     private void Assunto_jfmensagemActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+
     }
 
     private void jButton_EnviarActionPerformed(java.awt.event.ActionEvent evt) {
-
+        Talker.getInstance().enviarMensagem(
+                Usuario.getInstance().getUser_id(),
+                Destinatario_jfmensagem.getText(),
+                Assunto_jfmensagem.getText(),
+                jTextPane1.getText()
+        );
     }
 
 }

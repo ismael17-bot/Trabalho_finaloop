@@ -10,7 +10,6 @@ public class Mensagem {
         this.assunto      = assunto;
         this.texto        = texto;
     }
-
     public String toString() {
         String resposta = "de:" + remetente+ "\n";
         resposta += "para:" + destinatario+ "\n";

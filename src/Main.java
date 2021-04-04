@@ -1,10 +1,8 @@
-import javax.swing.*;
-
 public class Main {
     public  static void main(String[] args){
-//     (new janela1()).setVisible(true);
-        (new janela_login()).setVisible(true);
-//     (new janela_principal()).setVisible(true);
+   //  (new Janela1()).setVisible(true);
+      (new Janela_login()).setVisible(true);
+ //   (new Janela_principal()).setVisible(true);
 //        (new janela_mensagem()).setVisible(true);
 
     }

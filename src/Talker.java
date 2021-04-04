@@ -5,16 +5,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-/**
- * Fala com o Servidor. Suas responsabilidades sao:
- *
- *  - criar o socket
- *  - saber o que precisa ser escrito.
- *  - fazer a leitura da resposta.
- *  - disponibilizar a resposta para o resto da aplicação.
- *
- *  Ela sera Singleton para evitar multiplas instancias e tb concorrencia de acessos ao Socket.
- */
+
 public class Talker {
     // ------------------------
     // Fazendo a classe Singleton.
@@ -46,8 +37,8 @@ public class Talker {
         return resposta;
     }
 
-    public Mensagem[] getMensagens(String user) {
-        String mensagem = "{ \"get\": { \"user-id\": \"" + user +"\" } }";
+    public Mensagem[] getMensagens(String user_id) {
+        String mensagem = "{ \"get\": { \"user-id\": \"" + user_id +"\" } }";
         String resposta = null;
         System.out.println(mensagem);
         try {
@@ -73,7 +64,7 @@ public class Talker {
         if(json.contains("\"mensagens\":[]")) {
             return null;
         }
-        else if(json.contains("\"mensagens\":[")) {
+        else if(json.contains("\"mensagens\"[:")) {
             json = json.substring(json.indexOf('{'));
             json = json.substring(0, json.lastIndexOf('}'));
             json = json.substring(0, json.lastIndexOf(']'));
@@ -113,14 +104,7 @@ public class Talker {
         socket = new Socket("catolicasc-bigdata-valmor123.mybluemix.net", 80);
         System.out.println("Conectado... " + socket.isConnected());
     }
-    /**
-     *
-     * @param user eh o usuario da aplicacao, ou seja o rementente.
-     * @param destinatario
-     * @param assunto
-     * @param texto
-     * @return
-     */
+
     public String enviarMensagem(String user, String destinatario, String assunto, String texto) {
         String mensagem = "{ \"send\": { \"remetente\": \"" + user + "\", \"destinatario\": \""+ destinatario +"\", \"assunto\": \""+assunto+"\", \"texto\": \""+texto+"\" } }";
         String resposta = null;
@@ -160,4 +144,5 @@ public class Talker {
         System.out.println("termino da leitura");
         return resposta;
     }
+
 }
