@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class Janela_mensagem extends JFrame {
@@ -31,7 +32,7 @@ public class Janela_mensagem extends JFrame {
         jButton_Excluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new Color(0, 153, 255));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setName("Janela_mensagem"); // NOI18N
         setPreferredSize(new java.awt.Dimension(626, 495));
@@ -151,6 +152,7 @@ public class Janela_mensagem extends JFrame {
                 Assunto_jfmensagem.getText(),
                 jTextPane1.getText()
         );
+        this.dispose();
     }
 
 }

@@ -1,9 +1,7 @@
-public class Main {
-    public  static void main(String[] args){
-   //  (new Janela1()).setVisible(true);
-      (new Janela_login()).setVisible(true);
- //   (new Janela_principal()).setVisible(true);
-//        (new janela_mensagem()).setVisible(true);
+import java.io.IOException;
 
+public class Main {
+    public  static void main(String[] args) throws IOException {
+      (new Janela_login()).setVisible(true);
     }
 }

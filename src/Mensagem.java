@@ -17,4 +17,35 @@ public class Mensagem {
         resposta += "texto:" + texto+ "\n";
         return resposta;
     }
+    public String getAssunto() {
+        return assunto;
+    }
+
+    public void setAssunto(String assunto) {
+        this.assunto = assunto;
+    }
+
+    public String getMensagem() {
+        return texto;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.texto = mensagem;
+    }
+
+    public String getRementente() {
+        return remetente;
+    }
+
+    public void setRementente(String rementente) {
+        this.remetente = rementente;
+    }
+
+    public String getDestinatario() {
+        return destinatario;
+    }
+
+    public void setDestinatario(String destinatario) {
+        this.destinatario = destinatario;
+    }
 }

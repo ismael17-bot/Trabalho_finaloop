@@ -1,22 +1,20 @@
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Janela_principal extends JFrame {
 
+
     private JList<String> myList;
 
     private Painel_mensagens mensagens = Painel_mensagens.getInstance();
 
     private JTextField Assunto;
-    private JTextField Emisor;
+    private JTextField Destinatario_jfmensagem;
     private JButton Escrever_nova;
     private JTextArea Mensagem;
     private JPanel Mostra_mensagem;
@@ -26,6 +24,11 @@ public class Janela_principal extends JFrame {
     private JScrollPane jScrollPane2;
     private JTree jTree1_Mensagens;
     private java.awt.List list1;
+    private JLabel jLabel1;
+    private JLabel jLabel2;
+
+
+    private Mensagem[] recebi=null;
 
     private static Janela_principal _this;
 
@@ -47,20 +50,23 @@ public class Janela_principal extends JFrame {
         jTree1_Mensagens = new JTree();
         Escrever_nova = new JButton();
         Mostra_mensagem = new JPanel();
-        Emisor = new JTextField();
+        Destinatario_jfmensagem = new JTextField();
         Assunto = new JTextField();
         jScrollPane2 = new JScrollPane();
         Mensagem = new JTextArea();
         jPanel2 = new JPanel();
         list1 = new List();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+
 
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new Color(255, 255, 255));
+        jPanel1.setBackground(new Color(0, 153, 255));
 
         jTree1_Mensagens.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jTree1_Mensagens.setForeground(new Color(255, 255, 255));
+        jTree1_Mensagens.setForeground(new Color(0, 153, 255));
 
 
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Caixa de entrada");
@@ -81,6 +87,7 @@ public class Janela_principal extends JFrame {
 
         Escrever_nova.setFont(new Font("Tahoma", 0, 14)); // NOI18N
         Escrever_nova.setText("+ Escrever ");
+
         Escrever_nova.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 Escrever_novaActionPerformed(evt);
@@ -108,12 +115,12 @@ public class Janela_principal extends JFrame {
                                 .addContainerGap())
         );
 
-        Mostra_mensagem.setBackground(new Color(255, 255, 255));
+        Mostra_mensagem.setBackground(new Color(0, 153, 255));
 
 
-        Emisor.addActionListener(new ActionListener() {
+        Destinatario_jfmensagem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                EmisorActionPerformed(evt);
+                Destinatario_jfmensagemActionPerformed(evt);
             }
         });
         Assunto.addActionListener(new ActionListener() {
@@ -126,33 +133,48 @@ public class Janela_principal extends JFrame {
         Mensagem.setRows(5);
         jScrollPane2.setViewportView(Mensagem);
 
-        GroupLayout Mostra_mensagemLayout = new GroupLayout(Mostra_mensagem);
+        jLabel1.setText("Para:");
+
+        jLabel2.setText("Assunto:");
+
+        javax.swing.GroupLayout Mostra_mensagemLayout = new javax.swing.GroupLayout(Mostra_mensagem);
         Mostra_mensagem.setLayout(Mostra_mensagemLayout);
         Mostra_mensagemLayout.setHorizontalGroup(
-                Mostra_mensagemLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(Mostra_mensagemLayout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addGroup(Mostra_mensagemLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                Mostra_mensagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Mostra_mensagemLayout.createSequentialGroup()
+                                .addGroup(Mostra_mensagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(Mostra_mensagemLayout.createSequentialGroup()
-                                                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 449, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 20, Short.MAX_VALUE))
-                                        .addComponent(Emisor)
-                                        .addComponent(Assunto))
-                                .addContainerGap())
+                                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGroup(Mostra_mensagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addGroup(Mostra_mensagemLayout.createSequentialGroup()
+                                                                .addComponent(jLabel1)
+                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                                .addComponent(Destinatario_jfmensagem))
+                                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(Mostra_mensagemLayout.createSequentialGroup()
+                                                .addGap(23, 23, 23)
+                                                .addComponent(jLabel2)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(Assunto, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(26, 26, 26))
         );
         Mostra_mensagemLayout.setVerticalGroup(
-                Mostra_mensagemLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(Mostra_mensagemLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(Emisor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                Mostra_mensagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Mostra_mensagemLayout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addGroup(Mostra_mensagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jLabel1)
+                                        .addComponent(Destinatario_jfmensagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(Mostra_mensagemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(Assunto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel2))
                                 .addGap(18, 18, 18)
-                                .addComponent(Assunto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 376, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(26, Short.MAX_VALUE))
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel2.setBackground(new Color(255, 255, 255));
+        jPanel2.setBackground(new Color(0, 153, 255));
 
         list1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -161,39 +183,39 @@ public class Janela_principal extends JFrame {
         });
 
 
-        GroupLayout jPanel2Layout = new GroupLayout(jPanel2);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
-                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(mensagens, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-                                .addContainerGap())
+                                .addComponent(mensagens, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
-                jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(mensagens, GroupLayout.PREFERRED_SIZE, 441, GroupLayout.PREFERRED_SIZE)
+                jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addComponent(mensagens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addContainerGap())
         );
 
-        GroupLayout layout = new GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(jPanel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(Mostra_mensagem, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Mostra_mensagem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(jPanel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Mostra_mensagem, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Mostra_mensagem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         tree.getSelectionModel().addTreeSelectionListener(new TreeSelectionListener() {
@@ -203,22 +225,43 @@ public class Janela_principal extends JFrame {
 
                 if(e.getPath().toString().contains("Inbox")) {
 
-                    mensagens.updateLista(new String[]{"mensagem 1", "mensagem 2", "mensagem 3"});
+                    recebi = Talker.getInstance().getMensagens(Usuario.getInstance().getUser_id());
+                    String mostraMensagem []=null;
+                    mostraMensagem = new String [recebi.length];
 
-                    System.out.println(Talker.getInstance().getMensagens(Usuario.getInstance().getUser_id()));
-
+                    for (int i = 0; i < recebi.length; i++) {
+                        mostraMensagem[i]=("R: "+recebi[i].remetente.toString());
+                    }
+                    mensagens.updateLista(mostraMensagem);
                 }
-                else {
-                    
-                    mensagens.updateLista(new String[]{"ccacaacaacaa", "nbnbnbnbnbnbnb", "nnonononono 3"});
+                 if(e.getPath().toString().contains("Sent")) {
+                    Mensagem[] enviado = Talker.getInstance().getEnviados();
+
+                    if(enviado == null){
+                        System.out.println("nenhum email enviado");
+                    }else{
+                        System.out.println("enviados: "+Talker.getInstance().getEnviados());
+                        String[] mostraMensagem = new String[enviado.length];
+                        for (int i = 0; i < enviado.length; i++) {
+                            mostraMensagem[i]= new String("R: "+enviado[i].destinatario.toString());
+                        }
+                        mensagens.updateLista(mostraMensagem);
+                    }
                 }
             }
         });
+
         pack();
     }
 
+    public void mostraEmail(int index) {
+        System.out.println(Painel_mensagens.getInstance().myList.getSelectedValue());
+        Destinatario_jfmensagem.setText(recebi[index].remetente.toString());
+        Assunto.setText(recebi[index].assunto.toString());
+        Mensagem.setText(recebi[index].texto.toString());
+    }
 
-    private void EmisorActionPerformed(ActionEvent evt) {
+    private void Destinatario_jfmensagemActionPerformed(ActionEvent evt) {
 
     }
 

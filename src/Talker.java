@@ -5,12 +5,14 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-
 public class Talker {
     // ------------------------
     // Fazendo a classe Singleton.
     private static Talker instance;
     private Socket socket;
+
+    private ArrayList <Mensagem> mensagemsEnvidas = new ArrayList();
+    private ArrayList <Mensagem> mensagemsRecebidas = new ArrayList();
 
     public static Talker getInstance() {
         if(instance == null) {
@@ -37,8 +39,8 @@ public class Talker {
         return resposta;
     }
 
-    public Mensagem[] getMensagens(String user_id) {
-        String mensagem = "{ \"get\": { \"user-id\": \"" + user_id +"\" } }";
+    public Mensagem[] getMensagens(String user) {
+        String mensagem = "{ \"get\": { \"user-id\": \"" + user +"\" } }";
         String resposta = null;
         System.out.println(mensagem);
         try {
@@ -64,7 +66,7 @@ public class Talker {
         if(json.contains("\"mensagens\":[]")) {
             return null;
         }
-        else if(json.contains("\"mensagens\"[:")) {
+        else if(json.contains("\"mensagens\":[")) {
             json = json.substring(json.indexOf('{'));
             json = json.substring(0, json.lastIndexOf('}'));
             json = json.substring(0, json.lastIndexOf(']'));
@@ -112,11 +114,27 @@ public class Talker {
             abrirSocket();
             escreverParaOServidor("send", mensagem);
             resposta = lerRespostaDoServidor();
+
+            if(resposta.contains("mensagem enviada")){
+                mensagem = mensagem.substring(mensagem.indexOf(':')+2, mensagem.lastIndexOf('}')-1);
+                GerenciadorDeArquivo.getInstancia().escreverNoArquivo(mensagem);
+
+                mensagemsEnvidas.add(new Mensagem(user,destinatario,assunto,texto));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return resposta;
     }
+    public Mensagem[] getEnviados(){
+        if(mensagemsEnvidas.size()==0){
+            return null;
+        }
+        Mensagem[] enviados = new Mensagem[mensagemsEnvidas.size()];
+        enviados = mensagemsEnvidas.toArray(enviados);
+        return enviados;
+    }
+
 
     private void escreverParaOServidor(String what, String mensagem) throws IOException {
         PrintStream printer = new PrintStream(socket.getOutputStream());
@@ -144,5 +162,4 @@ public class Talker {
         System.out.println("termino da leitura");
         return resposta;
     }
-
 }

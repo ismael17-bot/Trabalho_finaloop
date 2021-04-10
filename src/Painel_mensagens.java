@@ -5,9 +5,8 @@ import java.awt.*;
 import java.util.Vector;
 
 public class Painel_mensagens extends JPanel {
-    private JList<Mensagem> listMensagens = new JList<>();
 
-    private JList<String> myList;
+    public JList<String> myList;
 
     private static Painel_mensagens _this;
 
@@ -16,11 +15,12 @@ public class Painel_mensagens extends JPanel {
         return _this;
     }
 
-    private Painel_mensagens(){
+    public Painel_mensagens(){
 
         String[] data = {"Inbox", "Sent"};
         myList = new JList<String>(data);
         add(myList);
+
         JScrollPane scrollMensagens = new JScrollPane();
 
         scrollMensagens.setViewportView(myList);
@@ -38,33 +38,22 @@ public class Painel_mensagens extends JPanel {
                 panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(panelLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(scrollMensagens)
+                                .addComponent(scrollMensagens, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
                                 .addContainerGap())
         );
 
         myList.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                System.out.println("Selecao no List foi: " + myList.getSelectedValue());
+                    Janela_principal.getInstance().mostraEmail(myList.getSelectedIndex());
             }
         });
     }
 
-//    public void addListener(ListSelectionListener listSelectionListener){
-//        listMensagens.addListSelectionListener(listSelectionListener);
-//    }
-
-    public void updateLista(String[] strings) {
+    public  void updateLista(String[] strings) {
         myList.removeAll();
         myList.setListData(strings);
     }
-//    public void updateLista(Vector<Mensagem> strings) {
-//        listMensagens.removeAll();
-//        System.out.println(strings);
-//        listMensagens.setListData(strings);
-//        /*assunto.setVisible(true);
-//        remetente.setVisible(true);
-//        mensagem_corpo.setVisible(true);*/
-//    }
+
 
 }
